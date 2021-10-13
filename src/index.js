@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Homepage from './Homepage';
 
-const { REACT_APP_API_URL = 'http://localhost:3000/api' } = process.env;
+const { REACT_APP_API_URL } = process.env;
 
 const App = () => {
     const [routines, setRoutines] = useState([]);
