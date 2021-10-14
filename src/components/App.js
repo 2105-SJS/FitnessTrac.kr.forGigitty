@@ -5,7 +5,6 @@ import {
     AccountForm,
     Activities,
     Home,
-    MyRoutines,
     Routines
    
 } from './index';
@@ -20,7 +19,7 @@ const App = () => {
     const [token, setToken] = useState('');
     const [user, setUser] = useState('');
     const [routines, setPosts] = useState([]);
-    const [messages, setMessages] = useState([]);
+    const [activities, setMessages] = useState([]);
     const [userId, setUserId] = useState('');
 
 
