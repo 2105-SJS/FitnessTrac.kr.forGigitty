@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Homepage from './Homepage';
 
-const { REACT_APP_API_URL } = process.env;
+const { REACT_APP_BASE_URL } = process.env;
 
 const App = () => {
     const [routines, setRoutines] = useState([]);
     const [token, setToken] = useState([]);
 
     const fetchRoutines = async () => {
-        const resp = await fetch(`${REACT_APP_API_URL}/routines`);
+        const resp = await fetch(`${REACT_APP_BASE_URL}/routines`);
         const data = await resp.json();
         if (data) {
             setRoutines(data);
@@ -41,5 +41,5 @@ ReactDOM.render(
     <Router>
         <App />
     </Router>,
-    document.getElementById('app'),
+    document.getElementById('App'),
 );

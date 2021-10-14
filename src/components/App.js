@@ -9,10 +9,11 @@ import {
     Routines
    
 } from './index';
+const { REACT_APP_BASE_URL } = process.env;
 
 import { callApi } from '../util';
 
-const { REACT_APP_BASE_URL } = process.env;
+
 
 
 const App = () => {
@@ -45,7 +46,7 @@ const App = () => {
             <Link to='/' className='emblem'><h1></h1></Link>
             <div className='nav-bar'>
                 <Link to="/" className="nav-link">Home</Link>
-                <Link to="/posts" className="nav-link">Posts</Link>
+                <Link to="/posts" className="nav-link">Routines</Link>
                 {
                     token ? <Link to='/profile' className="nav-link">Profile</Link> : ''
                 }
