@@ -8,7 +8,7 @@ import {
     Routines
    
 } from './index';
-const { REACT_APP_BASE_URL } = process.env;
+const { REACT_APP_BASE_URL } = "https://fitnesstrac-kr.herokuapp.com/api";
 
 import { callApi } from '../util';
 
@@ -18,23 +18,28 @@ import { callApi } from '../util';
 const App = () => {
     const [token, setToken] = useState('');
     const [user, setUser] = useState('');
-    const [routines, setPosts] = useState([]);
-    const [activities, setMessages] = useState([]);
+    const [routines, setRoutines] = useState([]);
+    const [activities, setActivities] = useState([]);
     const [userId, setUserId] = useState('');
 
 
-    const fetchPosts = async () => {
-        const respObj = await callApi({
-            url: `/posts`,
-            token
-        });
-        const postResponse = respObj.data.posts;
-        if (postResponse) setPosts(postResponse);
-    }
+    // const fetchRoutines = async () => {
+    //     try {
+    //         const resp = await fetch(`https://fitnesstrac-kr.herokuapp.com/api/routines`);
+    //         const results = await resp.json();
+    //         if (results) {
+    //             setRoutines(results);
+    //         };
+    //         console.log("RESULTS", results)
+    //     } catch (error) {
+    //         throw error;
+    //     };
+    // };
 
-    useEffect(() => {
+    useEffect( async () => {
         try {
-            fetchPosts();
+            // await fetchRoutines();
+            console.log("ROUTINES", routines);
         } catch (error) {
             console.error(error);
         }
@@ -45,7 +50,7 @@ const App = () => {
             <Link to='/' className='emblem'><h1></h1></Link>
             <div className='nav-bar'>
                 <Link to="/" className="nav-link">Home</Link>
-                <Link to="/posts" className="nav-link">Routines</Link>
+                <Link to="/Routines" className="nav-link">Routines</Link>
                 {
                     token ? <Link to='/profile' className="nav-link">Profile</Link> : ''
                 }

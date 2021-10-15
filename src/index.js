@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Homepage from './Homepage';
-import Home from './Home';
+import { Home, AccountForm, Routines } from './components/';
 // import Activities from './Activities';
 
 
@@ -25,20 +24,17 @@ const App = () => {
     }, [token])
     return <div>
         Hello World
-        <Route exact path="/">
-            <Homepage />
-        </Route>
         <Route exact path="/activities">
             <div>Activities</div>
         </Route>
-        <Route exact path="/home">
             <Route exact path="/">
-                <Homepage />
+                <Home />
             </Route>
-            <h1>Routines</h1>
-            {
-                routines.map((routine) => <div>{routine.name}</div>)
-            }
+            <Route exact path="/routines">
+                <Routines />
+        </Route>
+        <Route exact path="/users/login">
+            <AccountForm />
         </Route>
     </div>
 }
