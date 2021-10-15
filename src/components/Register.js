@@ -1,51 +1,49 @@
 import React, { useState } from 'react';
-import { useParams, useHistory } from 'react-router';
+const { REACT_APP_BASE_URL = 'http://localhost:3000/api' } = process.env;
 
-import { callApi } from '../util';
 
-const { REACT_APP_BASE_URL } = process.env;
-
-const Register = ({ setToken, setGuest }) => {
+const Register = ({ setToken }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const params = useParams();
-    const history = useHistory();
 
-    return <>
-        <h1>Login/Register</h1>
-        <div>This is the {params.method} method</div>
-        <form onSubmit={async (event) => {
-            event.preventDefault();
-            // we need to send a fetch request, so we can get the token
-            // in order to get a token, the server wants... username and password
-
-            const loginResp = await callApi({
-                url: `/users/${params.method}`,
+    const handleSubmit = async (ev) => {
+        try {
+            ev.preventDefault();
+            const resp = await fetch(`${REACT_APP_BASE_URL}/users/register`, {
                 method: 'POST',
-                body: {
-                        username,
-                        password
-                }
-            });
+                headers: {
+                    'Content-Type': 'Application/JSON'
+                },
+                body: JSON.stringify({
+                    username,
+                    password,
+                })
+            })
+            const data = await resp.json();
+            const { token } = data;
+            if (token) {
+                // setting something on localstorage
+                localStorage.setItem('token', token);
+                setToken(token);
+                setUsername('');
+                setPassword('');
+            }
+        } catch (error) {
+            console.error(error)
+        }
 
-            if (loginResp.data) {
-                // if we got back a token, get the user data
-                const usersResp = await callApi({ url: '/users/me', token: loginResp.data.token });
-                setToken(loginResp.data.token);
-                setUser(userResp.data.user);
-                if (loginResp.data.token) {
-                    history.push('/');
-                }
-            }
-        }}>
-            <input type="text" placeholder="username" value={username} onChange={(event) => setUsername(event.target.value)}></input>
-            <hr></hr>
-            <input type="password" placeholder="password" value={password} onChange={(event) => setPassword(event.target.value)}></input>
-            <hr></hr>
+    }
+
+    return <div>
+        <form onSubmit={handleSubmit}>
+            <input type="text" placeholder="username" onChange={(ev) => setUsername(ev.target.value)} value={username}></input>
+            <input type="password" placeholder="password" onChange={(ev) => setPassword(ev.target.value)} value={password}></input>
+        
             {
-                params.method === 'register' ? <div>SECOND PASSWORD INPUT WOULD GO HERE</div> : ''
+                params.method === 'login' ? <Link to='/users/register' className="registerhere" >Click here to register</Link> : <Link to='/account/login'>Click here to login</Link>
             }
-            <button type="submit" disabled={!password || !username}>Submit</button>
         </form>
-    </>
+    </div>
 }
+
+export default Register;

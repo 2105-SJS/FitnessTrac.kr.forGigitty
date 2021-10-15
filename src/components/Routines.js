@@ -3,38 +3,38 @@ import { callApi } from '../util';
 import { Link } from 'react-router-dom';
 
 import {
-    allRoutines,
-} from '.';
+    SingleRoutine,
+} from './';
 
-const Routines = ({ Routines, token, fetchRoutines }) => {
+const Routines = ({ routines, token, fetchRoutines }) => {
 
-    // const handleDelete = async (postId) => {
-    //     const respObj = await callApi({
-    //         method: 'DELETE',
-    //         url: `/Routines/${postId}`,
-    //         token
-    //     });
-    //     await fetchRoutines();
-    // }
+    const handleDelete = async (postId) => {
+        const respObj = await callApi({
+            method: 'DELETE',
+            url: `/routines/${routineId}`,
+            token
+        });
+        await fetchRoutines();
+    }
 
-    // return <div>
-    //     {
-    //         Routines.map(post => <allRoutines key={post._id} post={post} token={token}>
+    return <div>
+        {
+            routines.map(routine => <SingleRoutine key={routine._id} SingleRoutine={routine} token={token}>
 
-    //             {
-    //                 post && <Link to={`/Routines/${post._id}`} className="view-link">View Post</Link>
-    //             }
+                {
+                    routine && <Link to={`/routines/${routine._id}`} className="view-link">View Routine</Link>
+                }
 
-    //             {
-    //                 post.isAuthor && <Link to={`/Routines/edit/${post._id}`} className="edit-link">Edit</Link>
-    //             }
+                {
+                    routine.isAuthor && <Link to={`/routines/edit/${routine._id}`} className="edit-link">Edit</Link>
+                }
 
-    //             {
-    //                 post.isAuthor && <Link to={`/Routines/delete/${post._id}`} onClick={() => handleDelete(post._id)} className="delete-link">Delete</Link>
-    //             }
-    //         </allRoutines>)
-    //     }
-    // </div>
+                {
+                    routine.isAuthor && <Link to={`/routines/delete/${routine._id}`} onClick={() => handleDelete(routine._id)} className="delete-link">Delete</Link>
+                }
+            </SingleRoutine>)
+        }
+    </div>
 }
 
 
