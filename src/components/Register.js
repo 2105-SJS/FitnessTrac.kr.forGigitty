@@ -30,9 +30,9 @@ const Register = ({ setToken, setGuest }) => {
 
             if (loginResp.data) {
                 // if we got back a token, get the user data
-                const guestResp = await callApi({ url: '/guests/me', token: loginResp.data.token });
+                const usersResp = await callApi({ url: '/users/me', token: loginResp.data.token });
                 setToken(loginResp.data.token);
-                setGuest(guestResp.data.guest);
+                setUser(userResp.data.user);
                 if (loginResp.data.token) {
                     history.push('/');
                 }
