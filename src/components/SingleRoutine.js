@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { SingleActivities } from './'
 
 const SingleRoutine = ({ children, routine }) => {
@@ -13,14 +12,14 @@ const SingleRoutine = ({ children, routine }) => {
                 routine.activities.length > 0 && <div className='activities'>
                     <span>Activities:</span>
                     {
-                        routine.activities.map(activity => <SingleActivity key={activity.id} activity={activity}>
+                        routine.activities.map(activity => <SingleActivities key={activity.id} activity={activity}>
                             {
-                                <>
+                                <div>
                                     <span>Repetition: {activity.count} times</span>
                                     <span>Duration: {activity.duration} minutes</span>
-                                </>
+                                </div>
                             }
-                        </SingleActivity>)
+                        </SingleActivities>)
                     }
                 </div>
             }

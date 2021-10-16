@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, Route } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useHistory } from 'react-router';
 
 const { REACT_APP_BASE_URL } = process.env;
@@ -32,7 +32,8 @@ const Login = ({ setLoggedIn, setToken }) => {
         };
     };
 
-    return <>
+    return
+    <span>
         <h2>Login</h2>
         <form onSubmit={handleSubmit} className='login-form'>
             <input type='text' placeholder='enter username' onChange={(e) => setUsername(e.target.value)} value={username} />
@@ -40,7 +41,7 @@ const Login = ({ setLoggedIn, setToken }) => {
             <button type="submit" disabled={password < 8}>Login</button>
         </form>
         <span>Don't have an account? Click <Link to='/users/register'>here</Link> to register!</span>
-    </>
+    </span>
 };
 
 export default Login;

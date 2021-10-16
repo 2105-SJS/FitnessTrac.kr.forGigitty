@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, Route } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useHistory } from 'react-router';
 
 const { REACT_APP_BASE_URL } = process.env;
@@ -33,7 +33,8 @@ const Register = ({ setLoggedIn, setToken }) => {
         };
     };
 
-    return <>
+    return
+    <span>
         <h2>Register</h2>
         <form onSubmit={handleSubmit} className='login-form'>
             <input type='text' placeholder='enter username' onChange={(e) => setUsername(e.target.value)} value={username} />
@@ -49,7 +50,7 @@ const Register = ({ setLoggedIn, setToken }) => {
         {password !== verPass && <span className='no-match-alert'>Passwords must match!</span>}
 
         {password.length < 8 && <span className='no-match-alert'>Passwords must contain at least 8 characters!</span>}
-    </>;
+    </span>
 };
 
 export default Register;

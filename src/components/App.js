@@ -9,6 +9,7 @@ import {
     Register,
     Routines
 } from './';
+import Logout from './Logout';
 
 const { REACT_APP_BASE_URL } = process.env;
 
@@ -19,7 +20,7 @@ const App = () => {
     const [routines, setRoutines] = useState([]);
     const [token, setToken] = useState('');
     //HOOKS
-    const history = useHistory();
+    // const history = useHistory();
 
     const fetchActivities = async () => {
         try {
@@ -74,7 +75,7 @@ const App = () => {
         };
     });
 
-    return <>
+    return 
         {/* HEADER */}
         <header className='site-header'>
             <Link to='/' className='logo'><h1>Fitness Trac.kr</h1></Link>
@@ -82,7 +83,7 @@ const App = () => {
                 <Link to='/routines' className='nav-link'>Routines</Link>
                 <Link to='/activities' className='nav-link'>Activities</Link>
                 {!loggedIn
-                    ? <Link to='/users/login' className='nav-link'>Log in</Link>
+                    ? <Link to='/users/login' className='nav-link'>Login</Link>
                     : <button onClick={() => { setToken(''); setLoggedIn(false) }}>Logout</button>
                 }
             </div>
@@ -105,8 +106,11 @@ const App = () => {
             <Route exact path='/users/register'>
                 <Register {...props} />
             </Route>
+            <Route exact path='/users/logout'>
+                <Logout {...props} />
+            </Route>
         </main>
-    </>
+    
 };
 
 export default App;

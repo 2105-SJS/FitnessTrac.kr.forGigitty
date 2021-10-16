@@ -1,4 +1,4 @@
-const { REACT_APP_BASE_URL = 'http://localhost:3000/api' } = process.env;
+const { REACT_APP_BASE_URL = 'https://fitnesstrac-kr.herokuapp.com/api' } = process.env;
 
 export const callApi = async ({ url, method, token, body }) => {
     try {
