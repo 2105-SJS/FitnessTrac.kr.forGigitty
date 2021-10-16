@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { App } from './components/';
+import { App, SingleRoutine } from './components/';
 // // import Activities from './Activities';
 
 

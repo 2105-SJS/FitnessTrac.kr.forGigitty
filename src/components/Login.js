@@ -18,7 +18,9 @@ const Login = ({ setToken }) => {
                     username,
                     password,
                 })
+               
             })
+            
             const data = await resp.json();
             const { token } = data;
             if (token) {
@@ -28,6 +30,7 @@ const Login = ({ setToken }) => {
                 setUsername('');
                 setPassword('');
             }
+            console.log("TOKEN:", token)
         } catch (error) {
             console.error(error)
         }

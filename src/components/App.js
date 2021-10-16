@@ -5,6 +5,8 @@ import {
     Login,
     Register,
     Activities,
+    SingleActivity,
+    SingleRoutine,
     Home,
     Routines,
    
@@ -25,9 +27,9 @@ const App = () => {
     const [userId, setUserId] = useState('');
 
     const props = {
-        Activities,
+        activities,
         setActivities,
-        Routines,
+        routines,
         setRoutines,
         token,
         setToken
@@ -41,7 +43,6 @@ const App = () => {
             if (results) {
                 setRoutines(results);
             };
-            console.log("RESULTS", results)
         } catch (error) {
             throw error;
         };
