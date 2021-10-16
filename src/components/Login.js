@@ -1,49 +1,46 @@
 import React, { useState } from 'react';
-const { REACT_APP_BASE_URL = 'http://localhost:3000/api' } = process.env;
+import { Link, Route } from 'react-router-dom'
+import { useHistory } from 'react-router';
 
+const { REACT_APP_BASE_URL } = process.env;
 
-const Login = ({ setToken }) => {
+const Login = ({ setLoggedIn, setToken }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const history = useHistory();
 
-    const handleSubmit = async (ev) => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         try {
-            ev.preventDefault();
-            const resp = await fetch(`${REACT_APP_BASE_URL}/users/login`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'Application/JSON'
-                },
-                body: JSON.stringify({
-                    username,
-                    password,
-                })
-               
+            const response = await fetch(`${REACT_APP_BASE_URL}/users/login`, {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
             })
-            
-            const data = await resp.json();
+            const data = await response.json();
             const { token } = data;
             if (token) {
-                // setting something on localstorage
                 localStorage.setItem('token', token);
                 setToken(token);
+                setLoggedIn(true);
                 setUsername('');
                 setPassword('');
-            }
-            console.log("TOKEN:", token)
+                history.push('../')
+            };
         } catch (error) {
-            console.error(error)
-        }
+            console.error(error);
+        };
+    };
 
-    }
-
-    return <div>
-        <form onSubmit={handleSubmit}>
-            <input type="text" placeholder="username" onChange={(ev) => setUsername(ev.target.value)} value={username}></input>
-            <input type="password" placeholder="password" onChange={(ev) => setPassword(ev.target.value)} value={password}></input>
-            <button type="submit">Login</button>
+    return <>
+        <h2>Login</h2>
+        <form onSubmit={handleSubmit} className='login-form'>
+            <input type='text' placeholder='enter username' onChange={(e) => setUsername(e.target.value)} value={username} />
+            <input type="password" placeholder="password" onChange={(e) => setPassword(e.target.value)} value={password}></input>
+            <button type="submit" disabled={password < 8}>Login</button>
         </form>
-    </div>
-}
+        <span>Don't have an account? Click <Link to='/users/register'>here</Link> to register!</span>
+    </>
+};
 
 export default Login;

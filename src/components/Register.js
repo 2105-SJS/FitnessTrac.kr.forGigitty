@@ -1,49 +1,55 @@
 import React, { useState } from 'react';
-const { REACT_APP_BASE_URL = 'http://localhost:3000/api' } = process.env;
+import { Link, Route } from 'react-router-dom'
+import { useHistory } from 'react-router';
 
+const { REACT_APP_BASE_URL } = process.env;
 
-const Register = ({ setToken }) => {
+const Register = ({ setLoggedIn, setToken }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [verPass, setVerPass] = useState('');
+    const history = useHistory();
 
-    const handleSubmit = async (ev) => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         try {
-            ev.preventDefault();
-            const resp = await fetch(`${REACT_APP_BASE_URL}/users/register`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'Application/JSON'
-                },
-                body: JSON.stringify({
-                    username,
-                    password,
-                })
+            const response = await fetch(`${REACT_APP_BASE_URL}/users/register`, {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
             })
-            const data = await resp.json();
+            const data = await response.json();
             const { token } = data;
             if (token) {
-                // setting something on localstorage
                 localStorage.setItem('token', token);
                 setToken(token);
+                setLoggedIn(true);
                 setUsername('');
                 setPassword('');
-            }
+                history.push('../')
+            };
         } catch (error) {
-            console.error(error)
-        }
+            console.error(error);
+        };
+    };
 
-    }
+    return <>
+        <h2>Register</h2>
+        <form onSubmit={handleSubmit} className='login-form'>
+            <input type='text' placeholder='enter username' onChange={(e) => setUsername(e.target.value)} value={username} />
 
-    return <div>
-        <form onSubmit={handleSubmit}>
-            <input type="text" placeholder="username" onChange={(ev) => setUsername(ev.target.value)} value={username}></input>
-            <input type="password" placeholder="password" onChange={(ev) => setPassword(ev.target.value)} value={password}></input>
-        
-            {
-                params.method === 'login' ? <Link to='/users/register' className="registerhere" >Click here to register</Link> : <Link to='/account/login'>Click here to login</Link>
-            }
+            <input type="password" placeholder="enter password" onChange={(e) => setPassword(e.target.value)} value={password}></input>
+
+            <input type="password" placeholder="verify password" onChange={(e) => setVerPass(e.target.value)} value={verPass}></input>
+
+            <button type="submit" disabled={!password || !username || password.length < 8 || password !== verPass}>Register</button>
         </form>
-    </div>
-}
+        <span>Already have an account? Click <Link to='/users/login'>here</Link> to login!</span>
+
+        {password !== verPass && <span className='no-match-alert'>Passwords must match!</span>}
+
+        {password.length < 8 && <span className='no-match-alert'>Passwords must contain at least 8 characters!</span>}
+    </>;
+};
 
 export default Register;

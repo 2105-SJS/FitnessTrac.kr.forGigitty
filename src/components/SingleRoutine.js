@@ -1,23 +1,31 @@
 import React from 'react';
-import { callApi } from '../util';
-import { Link } from 'react-router-dom';
 
-const SingleRoutine = ({ routine, children }) => {
+import { SingleActivities } from './'
+
+const SingleRoutine = ({ children, routine }) => {
+
     return routine
-        ? <div
-            style={{ margin: '1.2rem' }}
-        >
-            <h5>
-                {routine.title}
-            </h5>
-            <div> Routine: {routine.description}</div>
-            
-    
+        ? <div className='routine-single'>
+            <span><h3>{routine.name}</h3></span>
+            <span><h3 className='creator-name'>created by {routine.creatorName}</h3></span>
+            <span>Goal: {routine.goal}</span>
             {
-                children
+                routine.activities.length > 0 && <div className='activities'>
+                    <span>Activities:</span>
+                    {
+                        routine.activities.map(activity => <SingleActivity key={activity.id} activity={activity}>
+                            {
+                                <>
+                                    <span>Repetition: {activity.count} times</span>
+                                    <span>Duration: {activity.duration} minutes</span>
+                                </>
+                            }
+                        </SingleActivity>)
+                    }
+                </div>
             }
         </div>
-        : 'Loading Routines...'
-}
+        : 'Loading...'
+};
 
 export default SingleRoutine;

@@ -1,92 +1,95 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Link } from 'react-router-dom';
+import { useHistory } from 'react-router';
 
 import {
+    Activities,
+    Home,
     Login,
     Register,
-    Activities,
-    SingleActivity,
-    SingleRoutine,
-    Home,
-    Routines,
-   
-} from './index';
-const { REACT_APP_BASE_URL } = "https://fitnesstrac-kr.herokuapp.com/api";
+    Routines
+} from './';
 
-
-
-import { callApi } from '../util';
-
-
+const { REACT_APP_BASE_URL } = process.env;
 
 const App = () => {
-    const [token, setToken] = useState('');
-    const [user, setUser] = useState('');
-    const [routines, setRoutines] = useState([]);
+    //STATE
     const [activities, setActivities] = useState([]);
-    const [userId, setUserId] = useState('');
+    const [loggedIn, setLoggedIn] = useState(false);
+    const [routines, setRoutines] = useState([]);
+    const [token, setToken] = useState('');
+    //HOOKS
+    const history = useHistory();
+
+    const fetchActivities = async () => {
+        try {
+            const response = await fetch(`${REACT_APP_BASE_URL}/activities`,
+                { headers: { 'Content-Type': 'application/json' } })
+            const data = await response.json();
+            if (data) {
+                setActivities(data);
+            };
+        } catch (error) {
+            throw error;
+        };
+    };
+
+    const fetchPublicRoutines = async () => {
+        try {
+            const response = await fetch(`${REACT_APP_BASE_URL}/routines`,
+                { headers: { 'Content-Type': 'application/json' } })
+            const data = await response.json();
+            if (data) {
+                setRoutines(data);
+            };
+        } catch (error) {
+            throw error;
+        };
+    };
 
     const props = {
         activities,
         setActivities,
+        loggedIn,
+        setLoggedIn,
         routines,
         setRoutines,
         token,
         setToken
     };
- 
 
-    const fetchRoutines = async () => {
+    useEffect(() => {
         try {
-            const resp = await fetch(`https://fitnesstrac-kr.herokuapp.com/api/routines`);
-            const results = await resp.json();
-            if (results) {
-                setRoutines(results);
-            };
-        } catch (error) {
-            throw error;
-        };
-    };
-
-    const fetchActivities = async () => {
-        try {
-            const resp = await fetch(`https://fitnesstrac-kr.herokuapp.com/api/activities`);
-            const results = await resp.json();
-            if (results) {
-                setActivities(results);
-            };
-            console.log("ACTIVITIES", results)
-        } catch (error) {
-            throw error;
-        };
-    };
-
-    useEffect( async () => {
-        try {
-            await fetchRoutines();
-            await fetchActivities();
-            console.log("ROUTINES", routines);
+            fetchPublicRoutines();
+            fetchActivities();
         } catch (error) {
             console.error(error);
-        }
+        };
     }, [token]);
 
-    return <div>
-        <header className="site-banner">
-            <Link to='/' className='emblem'><h1></h1></Link>
-            <div className='nav-bar'>
-                <Link to="/" className="nav-link">Home</Link>
-                <Link to="/routines" className="nav-link">Routines</Link>
-                {
-                    token ? <Link to='/activities' className="nav-link">Activities</Link> : ''
-                }
-                {
-                    token ? <Link to='/users/login' className='nav-link' onClick={() => setToken('')}>Log Out</Link> : <Link to='/users/login' className='nav-link'>Login</Link>
+    useEffect(() => {
+        const foundToken = localStorage.getItem('token');
+        if (foundToken) {
+            setToken(foundToken);
+        };
+    });
+
+    return <>
+        {/* HEADER */}
+        <header className='site-header'>
+            <Link to='/' className='logo'><h1>Fitness Trac.kr</h1></Link>
+            <div className='link-bar'>
+                <Link to='/routines' className='nav-link'>Routines</Link>
+                <Link to='/activities' className='nav-link'>Activities</Link>
+                {!loggedIn
+                    ? <Link to='/users/login' className='nav-link'>Log in</Link>
+                    : <button onClick={() => { setToken(''); setLoggedIn(false) }}>Logout</button>
                 }
             </div>
         </header>
-        {/*ROUTES*/}
-        <main id ='content'>
+
+        {/* ROUTES */}
+        <main id='content'>
             <Route exact path='/'>
                 <Home {...props} />
             </Route>
@@ -103,8 +106,7 @@ const App = () => {
                 <Register {...props} />
             </Route>
         </main>
-        <footer />
-    </div>
-}
+    </>
+};
 
 export default App;
