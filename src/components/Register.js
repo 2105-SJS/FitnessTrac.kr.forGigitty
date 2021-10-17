@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom'
-import { useHistory } from 'react-router';
+import React from "react";
+import { useState, useHistory } from 'react';
+import { Link } from 'react-router-dom';
 
 const { REACT_APP_BASE_URL } = process.env;
 
@@ -16,25 +16,25 @@ const Register = ({ setLoggedIn, setToken }) => {
             const response = await fetch(`${REACT_APP_BASE_URL}/users/register`, {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password })
+                body: JSON.stringify({ username, password }),
             })
             const data = await response.json();
-            const { token } = data;
+            const { token, user } = data;
             if (token) {
                 localStorage.setItem('token', token);
+                localStorage.setItem('username', user.username);
                 setToken(token);
                 setLoggedIn(true);
                 setUsername('');
                 setPassword('');
-                history.push('../')
+                history.push('/')
             };
         } catch (error) {
             console.error(error);
         };
     };
 
-    return
-    <span>
+    return <React.Fragment>
         <h2>Register</h2>
         <form onSubmit={handleSubmit} className='login-form'>
             <input type='text' placeholder='enter username' onChange={(e) => setUsername(e.target.value)} value={username} />
@@ -45,12 +45,12 @@ const Register = ({ setLoggedIn, setToken }) => {
 
             <button type="submit" disabled={!password || !username || password.length < 8 || password !== verPass}>Register</button>
         </form>
-        <span>Already have an account? Click <Link to='/users/login'>here</Link> to login!</span>
+        <span>Already have an account? Click <Link to='/account/login'>here</Link> to login!</span>
 
         {password !== verPass && <span className='no-match-alert'>Passwords must match!</span>}
 
         {password.length < 8 && <span className='no-match-alert'>Passwords must contain at least 8 characters!</span>}
-    </span>
+    </React.Fragment>;
 };
 
 export default Register;

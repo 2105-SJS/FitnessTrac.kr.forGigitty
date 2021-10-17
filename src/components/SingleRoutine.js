@@ -1,5 +1,6 @@
 import React from 'react';
-import { SingleActivities } from './'
+
+import { SingleActivity } from './'
 
 const SingleRoutine = ({ children, routine }) => {
 
@@ -8,19 +9,25 @@ const SingleRoutine = ({ children, routine }) => {
             <span><h3>{routine.name}</h3></span>
             <span><h3 className='creator-name'>created by {routine.creatorName}</h3></span>
             <span>Goal: {routine.goal}</span>
+            <span>Private: {!routine.isPublic ? 'no' : 'yes'}</span>
+            {children}
             {
                 routine.activities.length > 0 && <div className='activities'>
                     <span>Activities:</span>
-                    {
-                        routine.activities.map(activity => <SingleActivities key={activity.id} activity={activity}>
-                            {
-                                <div>
-                                    <span>Repetition: {activity.count} times</span>
-                                    <span>Duration: {activity.duration} minutes</span>
-                                </div>
-                            }
-                        </SingleActivities>)
-                    }
+                    <ul className='activities-list'>
+                        {
+                            routine.activities.map(activity => <li className='activity-single' key={activity.id}>
+                                <SingleActivity activity={activity}>
+                                    {
+                                        <React.Fragment>
+                                            <span>Repetition: {activity.count} times</span>
+                                            <span>Duration: {activity.duration} minutes</span>
+                                        </React.Fragment>
+                                    }
+                                </SingleActivity>
+                            </li>)
+                        }
+                    </ul>
                 </div>
             }
         </div>

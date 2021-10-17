@@ -3,15 +3,17 @@ import React from 'react';
 
 import { SingleRoutine } from './'
 
-const Routines = ({ setRoutines, fetchRoutines, routines, token, userData }) => {
-    console.log(routines)
-    return
+const Routines = ({ routines }) => {
+    console.log("ROUTINES: ", routines);
+    return <React.Fragment>
         {
-            routines.map(routine => <SingleRoutine key={routine.id} routine={routine}>
-                {/* CHILDREN */}
-            </SingleRoutine>)
+            routines
+                ? routines.map(routine => <SingleRoutine key={routine.id} routine={routine}>
+                    {/* CHILDREN */}
+                </SingleRoutine>)
+                : 'Loading...'
         }
-    
+    </React.Fragment>;
 };
 
 export default Routines;

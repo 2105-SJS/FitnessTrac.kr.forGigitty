@@ -1,16 +1,17 @@
 import React from 'react';
-import { SingleActivities } from './'
+
+import { SingleActivity } from './'
 
 const Activities = ({ activities }) => {
     return activities
-        ?
+        ? <React.Fragment>
             <div className='activities'>
                 <span>Activities:</span>
                 {
-                    activities.map(activity => <SingleActivities key={activity.id} activity={activity} />)
+                    activities.map(activity => <SingleActivity key={activity.id} activity={activity} />)
                 }
             </div>
-        
+        </React.Fragment>
         : 'Loading...'
 };
 
