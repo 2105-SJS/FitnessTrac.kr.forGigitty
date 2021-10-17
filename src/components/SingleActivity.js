@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SingleActivities = ({ children, activity }) => {
+const SingleActivity = ({ children, activity }) => {
     return activity
         ? <div className='activity-single'>
             <span>Name: {activity.name}</span>
@@ -10,4 +10,4 @@ const SingleActivities = ({ children, activity }) => {
         : 'Loading...'
 };
 
-export default SingleActivities;
+export default SingleActivity;
