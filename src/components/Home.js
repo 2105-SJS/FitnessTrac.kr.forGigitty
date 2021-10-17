@@ -1,5 +1,6 @@
 import React from 'react';
-    const Home = () => {
+const Home = () => {
+    console.log("Help");
         return <React.Fragment>
             <div>
                 Welcome to FitnessTrac.kr
