@@ -1,5 +1,4 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
 
 import { SingleRoutine } from './'
 
@@ -9,7 +8,7 @@ const Routines = ({ routines }) => {
         {
             routines
                 ? routines.map(routine => <SingleRoutine key={routine.id} routine={routine}>
-                    {/* CHILDREN */}
+                    {/* Children */}
                 </SingleRoutine>)
                 : 'Loading...'
         }

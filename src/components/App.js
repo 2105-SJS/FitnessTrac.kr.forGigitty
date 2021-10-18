@@ -14,14 +14,13 @@ import {
 const { REACT_APP_BASE_URL } = process.env;
 
 const App = () => {
-    //STATE
+
     const [activities, setActivities] = useState([]);
     const [loggedIn, setLoggedIn] = useState(false);
     const [routines, setRoutines] = useState([]);
     const [token, setToken] = useState('');
     const [userRoutines, setUserRoutines] = useState([]);
     const [username, setUsername] = useState('');
-    //HOOKS
     const history = useHistory();
 
     const fetchActivities = async () => {
@@ -99,7 +98,7 @@ const App = () => {
     
 
     return <>
-        {/* HEADER */}
+        {/* Header */}
         <header className='site-header'>
             <div className='logo-container'>
                 <Link to='/' className='logo'><h1>Fitness Tracker</h1></Link>
@@ -120,7 +119,7 @@ const App = () => {
             </div>
         </header>
 
-        {/* ROUTES */}
+        {/* Routes */}
         <main id='content'>
             <Route exact path='/'>
                 <Home {...props} />
