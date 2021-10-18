@@ -71,7 +71,7 @@ const MyRoutines = ({ setUserRoutines, token, username, userRoutines }) => {
         };
     }, []);
 
-    return <React.Fragment>
+    return <>
         <div className='form-container'>
             <h2>Create a new routine:</h2>
             <form onSubmit={handleSubmit} className='login-form'>
@@ -105,7 +105,7 @@ const MyRoutines = ({ setUserRoutines, token, username, userRoutines }) => {
                 })
                 : null
         }
-    </React.Fragment>;
+    </>;
 };
 
 export default MyRoutines;

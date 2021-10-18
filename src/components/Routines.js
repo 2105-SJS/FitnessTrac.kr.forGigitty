@@ -5,7 +5,7 @@ import { SingleRoutine } from './'
 
 const Routines = ({ routines }) => {
     console.log("ROUTINES: ", routines);
-    return <React.Fragment>
+    return <>
         {
             routines
                 ? routines.map(routine => <SingleRoutine key={routine.id} routine={routine}>
@@ -13,7 +13,7 @@ const Routines = ({ routines }) => {
                 </SingleRoutine>)
                 : 'Loading...'
         }
-    </React.Fragment>;
+    </>;
 };
 
 export default Routines;

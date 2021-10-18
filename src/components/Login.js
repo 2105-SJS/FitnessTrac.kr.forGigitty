@@ -34,7 +34,7 @@ const Login = ({ setLoggedIn, setToken }) => {
         };
     };
 
-    return <React.Fragment>
+    return <>
         <h2>Login</h2>
         <form onSubmit={handleSubmit} className='login-form'>
             <input type='text' placeholder='enter username' onChange={(e) => setUsername(e.target.value)} value={username} />
@@ -42,7 +42,7 @@ const Login = ({ setLoggedIn, setToken }) => {
             <button type="submit" disabled={password < 8}>Login</button>
         </form>
         <span>Don't have an account? Click <Link to='/account/register'>here</Link> to register!</span>
-    </React.Fragment>
+    </>
 };
 
 export default Login;

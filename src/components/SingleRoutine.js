@@ -19,10 +19,10 @@ const SingleRoutine = ({ children, routine }) => {
                             routine.activities.map(activity => <li className='activity-single' key={activity.id}>
                                 <SingleActivity activity={activity}>
                                     {
-                                        <React.Fragment>
+                                        <>
                                             <span>Repetition: {activity.count} times</span>
                                             <span>Duration: {activity.duration} minutes</span>
-                                        </React.Fragment>
+                                        </>
                                     }
                                 </SingleActivity>
                             </li>)

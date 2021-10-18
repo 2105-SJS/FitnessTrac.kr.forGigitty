@@ -1,11 +1,10 @@
 import React from 'react';
 const Home = () => {
-    console.log("Help");
-        return <React.Fragment>
+        return <>
             <div>
                 Welcome to FitnessTrac.kr
             </div>
-        </React.Fragment>;
+        </>;
     };
 
 export default Home;
