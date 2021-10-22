@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { SingleRoutine } from './'
+import {SingleRoutine} from './'
 
-const Routines = ({ publicRoutines }) => {
+const Routines = ({publicRoutines}) => {
     return publicRoutines
         ? <>
             <div className='routines'>
@@ -12,7 +12,7 @@ const Routines = ({ publicRoutines }) => {
                 }
             </div>
         </>
-        : 'Loading...'
+        : 'Loading Routines...'
 };
 
 export default Routines;

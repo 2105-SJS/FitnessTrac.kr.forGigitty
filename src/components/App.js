@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Route, Link } from 'react-router-dom';
-import { useHistory } from 'react-router';
+import React, {useState, useEffect} from 'react';
+import {Route, Link} from 'react-router-dom';
+import {useHistory} from 'react-router';
 
 import {
     Activities,
@@ -10,7 +10,7 @@ import {
     Routines
 } from './'
 
-import { callApi } from '../util';
+import {callApi} from '../util';
 
 const App = () => {
     const [publicRoutines, setPublicRoutines] = useState([]);
@@ -19,12 +19,11 @@ const App = () => {
     const [userName, setUserName] = useState('');
     const [userRoutines, setUserRoutines] = useState([]);
     const [userId, setUserId] = useState(Number)
-
     const history = useHistory();
     
     const fetchPublicRoutines = async () => {
         try {
-            const fetchedRoutines = await callApi ({ url: `/routines` });
+            const fetchedRoutines = await callApi ({url:`/routines`});
             if (fetchedRoutines) {
                 setPublicRoutines(fetchedRoutines);
             };
@@ -39,7 +38,7 @@ const App = () => {
         const localUsername = localStorage.getItem('username');
         try {
             if (localUsername) {
-                const fetchedRoutines = await callApi ({ url: `/users/${localUsername}/routines`, token: `${localToken}` });
+                const fetchedRoutines = await callApi ({url:`/users/${localUsername}/routines`, token: `${localToken}`});
                 if (fetchedRoutines) {
                     setUserRoutines(fetchedRoutines);
                 };
@@ -52,7 +51,7 @@ const App = () => {
 
     const fetchActivities = async () => {
         try {
-            const fetchedActivities = await callApi ({ url: `/activities` });
+            const fetchedActivities = await callApi ({url: `/activities`});
             if (fetchedActivities) {
                 setActivities(fetchedActivities);
             };
@@ -75,7 +74,6 @@ const App = () => {
         setUserName,
         userRoutines,
         setUserRoutines,
-
         fetchActivities,
         fetchPublicRoutines,
         fetchUserRoutines
@@ -129,12 +127,12 @@ const App = () => {
                         setToken('');
                         setUserRoutines([]);
                         history.push('/');
-                    }}>Log out</button>
-                    : <Link to='/account/login' className='nav-link'>Sign in</Link>
+                    }}>Log Out</button>
+                    : <Link to='/account/login' className='nav-link'>Sign In</Link>
                 }
             </div>
         </header>
-
+        
         <main>
             <Route exact path='/'>
                 <Home {...props} />
@@ -160,25 +158,3 @@ const App = () => {
 };
 
 export default App;
-// import logo from './logo.svg';
-// import './App.css';
-
-
-// const welcome = {
-//   greeting: 'My',
-//   title: 'FitnessTrac.kr',
-
-// };
-// function App() {
-//   return (
-//  <div>
-//       <h1>
-//         {welcome.greeting} {welcome.title}
-//       </h1>
-//       <label htmlFor="search">Search: </label>
-//       <input id="search" type="text" />
-//     </div>
-//   );
-// }
-
-// export default App;

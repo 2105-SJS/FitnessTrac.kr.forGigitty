@@ -1,4 +1,4 @@
-const { REACT_APP_API_URL } = process.env;
+const {REACT_APP_BASE_URL} = process.env;
 
 export const callApi = async ({url, method, token, body}) => {
   try {
@@ -11,7 +11,7 @@ export const callApi = async ({url, method, token, body}) => {
     };
     if (token) options.headers['Authorization'] = `Bearer ${token}`;
 
-    const response = await fetch(`${REACT_APP_API_URL}${url}`, options);
+    const response = await fetch(`${REACT_APP_BASE_URL}${url}`, options);
     const data = await response.json();
     if(data.error) {
       return ({error: data.error})

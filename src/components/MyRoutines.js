@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router';
+import React, {useState} from 'react';
+import {useHistory} from 'react-router';
 
-import { SingleRoutine } from './'
-import { callApi } from '../util';
+import {SingleRoutine} from './'
+import {callApi} from '../util';
 
-const MyRoutines = ({ activities, fetchPublicRoutines, fetchUserRoutines, userRoutines }) => {
+const MyRoutines = ({activities, fetchPublicRoutines, fetchUserRoutines, userRoutines}) => {
     const [name, setName] = useState('');
     const [goal, setGoal] = useState('');
     const [isPublic, setIsPublic] = useState(false);
@@ -16,8 +16,8 @@ const MyRoutines = ({ activities, fetchPublicRoutines, fetchUserRoutines, userRo
     const token = localStorage.getItem('token');
     const history = useHistory();
 
-    const handleAddRoutine = async (e) => {
-        e.preventDefault();
+    const handleAddRoutine = async (ev) => {
+        ev.preventDefault();
         try {
             const response = await callApi({
                 url: `/routines`,
@@ -59,13 +59,13 @@ const MyRoutines = ({ activities, fetchPublicRoutines, fetchUserRoutines, userRo
         };    
     };
 
-    const handleEditRoutine = (routineId) => async (e) => {
-        e.preventDefault();
+    const handleEditRoutine = (routineId) => async (ev) => {
+        ev.preventDefault();
         try {
             const response = await callApi({
                 url: `routines/${routineId}`,
                 method: 'PATCH',
-                body: { name, goal },
+                body: {name, goal},
                 token
             });
             if (response.error) {
@@ -85,13 +85,13 @@ const MyRoutines = ({ activities, fetchPublicRoutines, fetchUserRoutines, userRo
         };
     };
 
-    const handleAddActivity = (routineId) => async (e) => {
-        e.preventDefault();
+    const handleAddActivity = (routineId) => async (ev) => {
+        ev.preventDefault();
         try {
             const response = await callApi({
                 url: `/routines/${routineId}/activities`,
                 method: 'POST',
-                body: { activityId, count, duration },
+                body: {activityId, count, duration},
                 token
             });
             if (response) {
@@ -106,20 +106,20 @@ const MyRoutines = ({ activities, fetchPublicRoutines, fetchUserRoutines, userRo
     return <>
         <div className='form-container'>
             <form onSubmit={handleAddRoutine}>
-                <label>Create a new routine:</label>
+                <label>Create A New Routine:</label>
                 <fieldset>
                     <label>Name: </label>
-                    <input type='text' placeholder=' enter name' onChange={(e) => {setName(e.target.value)}} />
+                    <input type='text' placeholder=' enter-name' onChange={(ev) => {setName(ev.target.value)}} />
                 </fieldset>
                 <fieldset>
                     <label>Goal: </label>
-                    <input type='text' placeholder=' enter goal' onChange={(e) => {setGoal(e.target.value)}} />
+                    <input type='text' placeholder=' enter-goal' onChange={(ev) => {setGoal(ev.target.value)}} />
                 </fieldset>
                 <fieldset>
                     <label>Public: </label>
-                    <select placeholder='no' onChange={(e) => {setIsPublic(e.target.value)}}>
-                        <option value='false'>NO</option>
-                        <option value='true'>YES</option>
+                    <select placeholder='no' onChange={(ev) => {setIsPublic(ev.target.value)}}>
+                        <option value='false'>No</option>
+                        <option value='true'>Yes</option>
                     </select>
                 </fieldset>
                 <button type='submit'>Create Routine</button>
@@ -137,38 +137,38 @@ const MyRoutines = ({ activities, fetchPublicRoutines, fetchUserRoutines, userRo
                     {
                     userRoutines.map(routine => <SingleRoutine key={routine.id} routine={routine}>
 
-                        { <button onClick={() => handleDeleteRoutine(routine.id)}>Delete routine</button> }
+                        { <button onClick={() => handleDeleteRoutine(routine.id)}>Delete Routine</button> }
                         
                         { <div>
                             <h3>Edit Routine</h3>
                             <form onSubmit={handleEditRoutine(routine.id)}>
                                 <fieldset>
-                                    <label>Change name: </label>
-                                    <input type='text' value={name} placeholder={routine.name} onChange={(e) => setName(e.target.value)} />
+                                    <label>Change Name: </label>
+                                    <input type='text' value={name} placeholder={routine.name} onChange={(ev) => setName(ev.target.value)} />
                                 </fieldset>
                                 <fieldset>
-                                    <label>Change goal: </label>
-                                    <input type='text' value={goal} placeholder={routine.goal} onChange={(e) => setGoal(e.target.value)} />
+                                    <label>Change Goal: </label>
+                                    <input type='text' value={goal} placeholder={routine.goal} onChange={(ev) => setGoal(ev.target.value)} />
                                 </fieldset>
                             </form>
-                            <button type='submit'>Submit changes</button>
+                            <button type='submit'>Submit Changes</button>
                         </div> }
 
                         { <div>
-                            <h3>Add activity to routine</h3>
+                            <h3>Add Activity To Routine</h3>
                             <form onSubmit={handleAddActivity(routine.id)}>
-                                <select onChange={(e) => setActivityId(e.target.value)}>
+                                <select onChange={(ev) => setActivityId(ev.target.value)}>
                                 {activities.map(activity => <option key={activity.id} value={activity.id}>{activity.name}</option>)}
                                 </select>
                                 <fieldset>
                                     <label>Count: </label>
-                                    <input type='number' placeholder='number of repetitions' onChange={(e) => setCount(e.target.value)}></input>
+                                    <input type='number' placeholder='number-of-repetitions' onChange={(ev) => setCount(ev.target.value)}></input>
                                 </fieldset>
                                 <fieldset>
                                     <label>Duration: </label>
-                                    <input type='number' placeholder='number of minutes' onChange={(e) => setDuration(e.target.value)}></input>
+                                    <input type='number' placeholder='number-of-minutes' onChange={(ev) => setDuration(ev.target.value)}></input>
                                 </fieldset>
-                                <button type='submit'>Add activity</button>
+                                <button type='submit'>Add Activity</button>
                             </form>
                         </div> }
 

@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom'
-import { useHistory } from 'react-router';
+import React, {useState} from 'react';
+import {Link} from 'react-router-dom'
+import {useHistory} from 'react-router';
 
-const {REACT_APP_API_URL} = process.env;
+const {REACT_APP_BASE_URL} = process.env;
 
-const Login = ({ setLoggedIn, setToken }) => {
+const Login = ({setLoggedIn, setToken}) => {
     const [ username, setUsername ] = useState('');
     const [ password, setPassword ] = useState('');
     const history = useHistory();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleSubmit = async (ev) => {
+        ev.preventDefault();
         try {
-            const response = await fetch(`${REACT_APP_API_URL}/users/login`, {
+            const response = await fetch(`${REACT_APP_BASE_URL}/users/login`, {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({username, password}),
             })
             const data = await response.json();
-            const { token, user } = data;
+            const {token, user} = data;
             if (token) {
                 localStorage.setItem('token', token);
                 localStorage.setItem('username', user.username);
@@ -37,11 +37,11 @@ const Login = ({ setLoggedIn, setToken }) => {
     return <>
         <h2>Login</h2>
         <form onSubmit={handleSubmit} className='login-form'>
-            <input type='text' placeholder='enter username' onChange={(e) => setUsername(e.target.value)} value={username} />
-            <input type="password" placeholder="password" onChange={(e) => setPassword(e.target.value)} value={password}></input>
+            <input type='text' placeholder='enter username' onChange={(ev) => setUsername(ev.target.value)} value={username} />
+            <input type="password" placeholder="password" onChange={(ev) => setPassword(ev.target.value)} value={password}></input>
             <button type="submit" disabled={password < 8}>Login</button>
         </form>
-        <span>Don't have an account? Click <Link to='/account/register'>here</Link> to register!</span>
+        <span>No Account Yet? Click <Link to='/account/register'>Here</Link> To Register!</span>
     </>
 };
 

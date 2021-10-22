@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom'
-import { useParams, useHistory } from 'react-router';
-import { callApi } from '../util';
+import React, {useState} from 'react';
+import {Link} from 'react-router-dom'
+import {useParams, useHistory} from 'react-router';
+import {callApi} from '../util';
 
-const LoginRegister = ({ fetchUserRoutines, setToken, setUserName, setUserId }) => {
+const LoginRegister = ({fetchUserRoutines, setToken, setUserName, setUserId}) => {
     const [ username, setUsername ] = useState('');
     const [ password, setPassword ] = useState('');
     const [ verPass, setVerPass ] = useState('');
@@ -16,26 +16,26 @@ const LoginRegister = ({ fetchUserRoutines, setToken, setUserName, setUserId }) 
             <div className='login-header'>            
                 {
                 params.method === 'register' 
-                    ? <h3 className='header'>Register a new account</h3> 
-                    : <h3 className='header'>Login to your account</h3>
+                    ? <h3 className='header'>Register A New Account</h3> 
+                    : <h3 className='header'>Login To Your Account</h3>
                 }           
             </div>
-            <form className='login-form' onSubmit={async (e) =>{
-                e.preventDefault();
+            <form className='login-form' onSubmit={async (ev) =>{
+                ev.preventDefault();
                 try{ 
                     const response = await callApi ({
                         url: `/users/${params.method}`,
                         method: 'POST',
-                        body: { username, password }                        
+                        body: {username, password}                        
                     });
                     if (response.error) {
                         setError(response.error);
-                    };
+                    }
                     if (response.token) {
-                        const { token } = response;
+                        const {token} = response;
                         setToken(token);
                         localStorage.setItem('token', token);
-                        const user = await callApi({ url: '/users/me', token})
+                        const user = await callApi({url: '/users/me', token})
                         if (user) {
                             setUserName(user.username);
                             localStorage.setItem('username', user.username);
@@ -52,13 +52,13 @@ const LoginRegister = ({ fetchUserRoutines, setToken, setUserName, setUserId }) 
                 };                
             }}>
                 <fieldset className='input-fieldset'>
-                    <label>User name</label>
+                    <label>User Name</label>
                     <input 
                         className='input-field' 
                         type='text'
                         name='Login Name'
-                        placeholder='enter your user name' 
-                        onChange={(e) => setUsername(e.target.value)}
+                        placeholder='Please Enter User Name: ' 
+                        onChange={(ev) => setUsername(ev.target.value)}
                     />
                 </fieldset>
 
@@ -68,8 +68,8 @@ const LoginRegister = ({ fetchUserRoutines, setToken, setUserName, setUserId }) 
                         className='input-field' 
                         type='password' 
                         name='Password'
-                        placeholder='password (min length 6 chars)' 
-                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder='password (min length 8 chars)' 
+                        onChange={(ev) => setPassword(ev.target.value)}
                     />
                 </fieldset>
 
@@ -81,8 +81,8 @@ const LoginRegister = ({ fetchUserRoutines, setToken, setUserName, setUserId }) 
                                 className='input-field' 
                                 type='password' 
                                 name='Verify Password'
-                                placeholder='re-enter your password' 
-                                onChange={(e) => setVerPass(e.target.value)}
+                                placeholder='Re-Enter User Password: ' 
+                                onChange={(ev) => setVerPass(ev.target.value)}
                             />
                     </fieldset>
                     : ''
@@ -109,15 +109,15 @@ const LoginRegister = ({ fetchUserRoutines, setToken, setUserName, setUserId }) 
                 {
                 params.method === 'register' 
                 ? <>
-                    <span>Already have an account yet? </span>
+                    <span>Already Have An Account? </span>
                     <Link to="/account/login" className='login-link'>
-                        Click here to log in!
+                        Click Here To Log In!
                     </Link>
                 </> 
                 : <>
-                    <span>Already have an account yet? </span>
+                    <span>No Account Yet? </span>
                     <Link to="/account/register" className='login-link'>
-                        Click here to register!
+                        Click Here To Register!
                     </Link>
                 </>
                 }
