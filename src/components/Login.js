@@ -2,20 +2,20 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom'
 import { useHistory } from 'react-router';
 
-const { REACT_APP_BASE_URL } = process.env;
+const {REACT_APP_API_URL} = process.env;
 
 const Login = ({ setLoggedIn, setToken }) => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [ username, setUsername ] = useState('');
+    const [ password, setPassword ] = useState('');
     const history = useHistory();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`${REACT_APP_BASE_URL}/users/login`, {
+            const response = await fetch(`${REACT_APP_API_URL}/users/login`, {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password }),
+                body: JSON.stringify({username, password}),
             })
             const data = await response.json();
             const { token, user } = data;
@@ -26,7 +26,7 @@ const Login = ({ setLoggedIn, setToken }) => {
                 setLoggedIn(true);
                 setUsername('');
                 setPassword('');
-                history.push('./routines');
+                history.push('/');
                 return;
             };
         } catch (error) {

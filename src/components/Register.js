@@ -1,22 +1,22 @@
-import React from "react";
-import { useState, useHistory } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router';
 
-const { REACT_APP_BASE_URL } = process.env;
+const {REACT_APP_API_URL} = process.env;
 
 const Register = ({ setLoggedIn, setToken }) => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [verPass, setVerPass] = useState('');
+    const [ username, setUsername ] = useState('');
+    const [ password, setPassword ] = useState('');
+    const [ verPass, setVerPass ] = useState('');
     const history = useHistory();
-
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`${REACT_APP_BASE_URL}/users/register`, {
+            const response = await fetch(`${REACT_APP_API_URL}/users/register`, {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password }),
+                body: JSON.stringify({username, password}),
             })
             const data = await response.json();
             const { token, user } = data;
@@ -43,13 +43,13 @@ const Register = ({ setLoggedIn, setToken }) => {
 
             <input type="password" placeholder="verify password" onChange={(e) => setVerPass(e.target.value)} value={verPass}></input>
 
-            <button type="submit" disabled={!password || !username || password.length < 8 || password !== verPass}>Register</button>
+            <button type="submit" disabled={ !password || !username || password.length < 8 || password !== verPass }>Register</button>
         </form>
         <span>Already have an account? Click <Link to='/account/login'>here</Link> to login!</span>
 
-        {password !== verPass && <span className='no-match-alert'>Passwords must match!</span>}
+        { password !== verPass && <span className='no-match-alert'>Passwords must match!</span> }
 
-        {password.length < 8 && <span className='no-match-alert'>Passwords must contain at least 8 characters!</span>}
+        { password.length < 8 && <span className='no-match-alert'>Passwords must contain at least 8 characters!</span> }
     </>;
 };
 
