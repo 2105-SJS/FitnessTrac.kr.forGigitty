@@ -24,9 +24,9 @@ const App = () => {
     
     const fetchPublicRoutines = async () => {
         try {
-            const fetchedRoutines = await callApi ({ url: `/routines` });
-            if (fetchedRoutines) {
-                setPublicRoutines(fetchedRoutines);
+            const fetchRoutines = await callApi ({ url: `/routines` });
+            if (fetchRoutines) {
+                setPublicRoutines(fetchRoutines);
             };
             return;            
         } catch (error) {
@@ -39,9 +39,9 @@ const App = () => {
         const localUsername = localStorage.getItem('username');
         try {
             if (localUsername) {
-                const fetchedRoutines = await callApi ({ url: `/users/${localUsername}/routines`, token: `${localToken}` });
-                if (fetchedRoutines) {
-                    setUserRoutines(fetchedRoutines);
+                const fetchRoutines = await callApi ({ url: `/users/${localUsername}/routines`, token: `${localToken}` });
+                if (fetchRoutines) {
+                    setUserRoutines(fetchRoutines);
                 };
             };
             return;            
@@ -52,9 +52,9 @@ const App = () => {
 
     const fetchActivities = async () => {
         try {
-            const fetchedActivities = await callApi ({ url: `/activities` });
-            if (fetchedActivities) {
-                setActivities(fetchedActivities);
+            const fetchActivities = await callApi ({ url: `/activities` });
+            if (fetchActivities) {
+                setActivities(fetchActivities);
             };
             return;
         } catch (error) {
@@ -75,7 +75,6 @@ const App = () => {
         setUserName,
         userRoutines,
         setUserRoutines,
-
         fetchActivities,
         fetchPublicRoutines,
         fetchUserRoutines
@@ -130,7 +129,7 @@ const App = () => {
                         setUserRoutines([]);
                         history.push('/');
                     }}>Log out</button>
-                    : <Link to='/account/login' className='nav-link'>Sign in</Link>
+                    : <Link to='/login' className='nav-link'>Login</Link>
                 }
             </div>
         </header>
@@ -148,11 +147,11 @@ const App = () => {
                 <Activities {...props} />
             </Route>
 
-            <Route exact path='/user/routines'>
+            <Route exact path='/user/routines/myroutines'>
                 <MyRoutines {...props} />
             </Route>
 
-            <Route exact path='/account/:method'>
+            <Route exact path='/user/:method'>
                 <LoginRegister {...props} />
             </Route>
         </main>

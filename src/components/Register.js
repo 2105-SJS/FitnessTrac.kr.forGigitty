@@ -36,8 +36,8 @@ const Register = ({setLoggedIn, setToken}) => {
 
     return <>
         <h2>Register</h2>
-        <form onSubmit={handleSubmit} className='login-form'>
-            <input type='text' placeholder='enter username' onChange={(ev) => setUsername(ev.target.value)} value={username} /></input>
+        <form onSubmit={handleSubmit} className='login'>
+            <input type='text' placeholder='enter username' onChange={(ev) => setUsername(ev.target.value)} value={username}></input>
 
             <input type="password" placeholder="enter password" onChange={(ev) => setPassword(ev.target.value)} value={password}></input>
 
@@ -45,7 +45,7 @@ const Register = ({setLoggedIn, setToken}) => {
 
             <button type="submit" disabled={ !password || !username || password.length < 8 || password !== verPass }>Register</button>
         </form>
-        <span>Already Have An Account? Click <Link to='/account/login'>Here</Link> to Log In!</span>
+        <span>Already Have An Account? Click <Link to='/users/login'>Here</Link> to Log In!</span>
 
         { password !== verPass && <span className='non-matching-data'>Passwords must match!</span> }
 

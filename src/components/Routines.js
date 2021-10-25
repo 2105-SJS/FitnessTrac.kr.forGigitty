@@ -11,15 +11,15 @@ const Routines = ({ Routines, token, fetchRoutines }) => {
     const handleDelete = async (postId) => {
         const respObj = await callApi({
             method: 'DELETE',
-            url: `/Routines/${routineId}`,
+            url: `/routines/${routineId}`,
             token
         });
         await fetchRoutines();
     }
 
-    return <div>
+    return 
         { 
-            Routines.map(post => <SingleRoutine key={routine._id} routines={routines} token={token}>
+            Routines.map(routines => <SingleRoutine key={routines._id} routines={routines} token={token}>
 
                 {
                     routines && <Link to={`/routines/${routines._id}`} className="view-link">View Routines</Link>
@@ -34,7 +34,6 @@ const Routines = ({ Routines, token, fetchRoutines }) => {
                 }
             </SingleRoutine>)
         }
-    </div>
 }
 
 

@@ -1,5 +1,5 @@
 const express=require('express');
-//const jwt=require('jsonwebtoken');
+const jwt=require('jsonwebtoken');
 const {JWT_SECRET}=process.env;
 const {createUser,getUser,getPublicRoutinesByUser}=require('/')
 const usersRouter=express.Router();
@@ -23,13 +23,12 @@ usersRouter.post('/register',async(req,res,next)=>
         }
         else
         {
-            console.log("hit throw");
-            throw Error('invalid username/password: must have a username and a password 8 characters or longer.');
+        
+            throw Error('Invalid Username/Password: Users must have a Username and a Password 8 characters or longer.');
         }
     }
     catch(error)
     {
-        console.log("hit next");
         next(error);
     }
 });

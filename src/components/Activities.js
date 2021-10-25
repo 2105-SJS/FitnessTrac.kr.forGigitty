@@ -45,7 +45,7 @@ const Activities = ({ activities, fetchActivities }) => {
                         <label>Description: </label>
                         <input type='text' value={description} placeholder='enter activity description' onChange={(e) => {setDescription(e.target.value)}}></input>
                     </fieldset>
-                    <button type='submit'>Add activity</button>
+                    <button type='submit'>Add Activity</button>
                 </form>
             </div>
             : null
