@@ -1,8 +1,8 @@
 import React from 'react';
 
-import {SingleActivity} from './'
+import { SingleActivity } from './'
 
-const SingleRoutine = ({children, routine}) => {
+const SingleRoutine = ({ children, routine }) => {
 
     return routine 
         ? <div className='routine-single'>
@@ -11,7 +11,7 @@ const SingleRoutine = ({children, routine}) => {
             <span>Goal: {routine.goal}</span>
             <span>Public: {routine.isPublic ? 'yes': 'no' }</span>
 
-            {children}
+            { children}
 
             {
             routine.activities.length > 0 && <div className='activities'>

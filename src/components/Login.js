@@ -1,48 +1,83 @@
-import React, {useState} from 'react';
-import {Link} from 'react-router-dom'
-import {useHistory} from 'react-router';
+import React, { useState } from 'react';
+import { useParams, useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
+import { callApi } from '../util';
 
-const {REACT_APP_BASE_URL} = process.env;
+const { REACT_APP_BASE_URL } = process.env;
 
-const Login = ({setLoggedIn, setToken}) => {
-    const [ username, setUsername ] = useState('');
-    const [ password, setPassword ] = useState('');
+const Login= ({ setToken, setUser, setMessages, setUserId }) => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [passwordMatch, setPasswordMatch] = useState('');
+    const params = useParams();
     const history = useHistory();
 
-    const handleSubmit = async (ev) => {
-        ev.preventDefault();
-        try {
-            const response = await fetch(`${REACT_APP_BASE_URL}/users/login`, {
-                method: "POST",
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({username, password}),
-            })
-            const data = await response.json();
-            const {token, user} = data;
-            if (token) {
-                localStorage.setItem('token', token);
-                localStorage.setItem('username', user.username);
-                setToken(token);
-                setLoggedIn(true);
-                setUsername('');
-                setPassword('');
-                history.push('/');
-                return;
-            };
-        } catch (error) {
-            console.error(error);
-        };
-    };
+    return <div>
+        <form onSubmit={async (event) => {
+            event.preventDefault();
+            try {
 
-    return <>
-        <h2>Login</h2>
-        <form onSubmit={handleSubmit} className='login-form'>
-            <input type='text' placeholder='enter username' onChange={(ev) => setUsername(ev.target.value)} value={username} />
-            <input type="password" placeholder="password" onChange={(ev) => setPassword(ev.target.value)} value={password}></input>
-            <button type="submit" disabled={password < 8}>Login</button>
+                const fetchUrl = `${REACT_APP_BASE_URL}/users/${params.method}`
+                console.log('fetchUrl: ', fetchUrl);
+
+                const loginResponse = await callApi({
+                    url: `/users/${params.method}`,
+                    method: 'POST',
+                    body: {
+                        user: {
+                            username,
+                            password
+                        }
+                    }
+                });
+                
+
+
+                if (loginResponse.data) {
+
+                    const userResponse = await callApi({ url: '/users/me', token: loginResponse.data.token });
+                    setToken(loginResponse.data.token);
+                    setUser(userResponse.data.username);
+                    setMessages(userResponse.data.messages);
+                    setUserId(userResponse.data._id);
+                    if (loginResponse.data.token) {
+                        history.push('/');
+                    }
+                }
+            } catch (error) {
+                console.error(error)
+                alert("Invalid Username or Password. The information you've entered doesn't match any account. Please use the link below to register for an account.")
+                setUsername('')
+                setPassword('')
+            }
+        }}>
+            <div className="container">
+                <h1 className='loginheader'><div>{params.method}</div></h1>
+                <br />
+                <input type="text" placeholder=" username" value={username} onChange={(event) => setUsername(event.target.value)}></input>
+                <br />
+
+                <input type="password" placeholder=" password" value={password} onChange={(event) => setPassword(event.target.value)}></input>
+                <br />
+
+                {
+                    params.method === 'register' ? <input type="password" placeholder="retype your password" value={passwordMatch} onChange={(event) => setPasswordMatch(event.target.value)}></input>
+                        : ''
+                }
+
+                {
+
+                    params.method === 'register' ? <button type="submit" disabled={!password || !username || password !== passwordMatch} >Submit</button> : <button type="submit" disabled={!password || !username}>Submit</button>
+
+                }
+
+                {
+                    params.method === 'login' ? <Link to='/users/register' className="registerhere" >Click here to register</Link> : <Link to='/users/login'>Click here to login</Link>
+                }
+            </div>
         </form>
-        <span>No Account Yet? Click <Link to='/account/register'>Here</Link> To Register!</span>
-    </>
-};
+    </div>
+}
+
 
 export default Login;

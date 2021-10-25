@@ -6,7 +6,7 @@ import {callApi} from '../util';
 const LoginRegister = ({fetchUserRoutines, setToken, setUserName, setUserId}) => {
     const [ username, setUsername ] = useState('');
     const [ password, setPassword ] = useState('');
-    const [ verPass, setVerPass ] = useState('');
+    const [ passwordMatch, setPasswordMatch ] = useState('');
     const [ error, setError] = useState('');
     const params = useParams();
     const history = useHistory();
@@ -82,7 +82,7 @@ const LoginRegister = ({fetchUserRoutines, setToken, setUserName, setUserId}) =>
                                 type='password' 
                                 name='Verify Password'
                                 placeholder='Re-Enter User Password: ' 
-                                onChange={(ev) => setVerPass(ev.target.value)}
+                                onChange={(ev) => setPasswordMatch(ev.target.value)}
                             />
                     </fieldset>
                     : ''
@@ -90,14 +90,14 @@ const LoginRegister = ({fetchUserRoutines, setToken, setUserName, setUserId}) =>
                 
                 {
                 params.method === 'register' 
-                    ? <button className='login-button' type="submit" disabled={!password || !username || password.length < 8 || password !== verPass }>
+                    ? <button className='login-button' type="submit" disabled={!password || !username || password.length < 8 || password !== passwordMatch }>
                         Register
                     </button> 
                     : <button className='login-button' type="submit" disabled={!password || !username || password.length < 8 }>
                         Login
                     </button>
                 }
-                { params.method === 'register' && password !== verPass && <span className='password-alert'>Passwords must match!</span> }
+                { params.method === 'register' && password !== passwordMatch && <span className='password-alert'>Passwords must match!</span> }
 
                 { params.method === 'register' && password.length < 8 && <span className='password-alert'>Passwords must contain at least 8 characters!</span> }
 
@@ -110,7 +110,7 @@ const LoginRegister = ({fetchUserRoutines, setToken, setUserName, setUserId}) =>
                 params.method === 'register' 
                 ? <>
                     <span>Already Have An Account? </span>
-                    <Link to="/account/login" className='login-link'>
+                    <Link to="/users/login" className='login-link'>
                         Click Here To Log In!
                     </Link>
                 </> 

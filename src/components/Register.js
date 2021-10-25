@@ -37,7 +37,7 @@ const Register = ({setLoggedIn, setToken}) => {
     return <>
         <h2>Register</h2>
         <form onSubmit={handleSubmit} className='login-form'>
-            <input type='text' placeholder='enter username' onChange={(ev) => setUsername(ev.target.value)} value={username} />
+            <input type='text' placeholder='enter username' onChange={(ev) => setUsername(ev.target.value)} value={username} /></input>
 
             <input type="password" placeholder="enter password" onChange={(ev) => setPassword(ev.target.value)} value={password}></input>
 
