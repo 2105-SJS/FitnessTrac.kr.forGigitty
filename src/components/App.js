@@ -7,7 +7,9 @@ import {
     Home,
     LoginRegister,
     MyRoutines,
-    Routines
+    Routines,
+    Login,
+    Users
 } from './'
 
 import { callApi } from '../util';
@@ -152,7 +154,7 @@ const App = () => {
             </Route>
 
             <Route exact path='/user/:method'>
-                <LoginRegister {...props} />
+                <Login {...props} />
             </Route>
         </main>
     </>;

@@ -53,7 +53,7 @@ const Activities = ({ activities, fetchActivities }) => {
         {
         activities 
             ? <div className='activities'>
-                    <span>Activities:</span>
+                    <div>Activities:</div>
                     {
                     activities.map(activity => <SingleActivity key={activity.id} activity={activity} />)
                     }

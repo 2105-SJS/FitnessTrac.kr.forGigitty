@@ -6,9 +6,9 @@ import {
     SingleRoutine,
 } from '.';
 
-const Routines = ({ Routines, token, fetchRoutines }) => {
+const Routines = ({ routines, token, fetchRoutines }) => {
 
-    const handleDelete = async (postId) => {
+    const handleDelete = async (routineId) => {
         const respObj = await callApi({
             method: 'DELETE',
             url: `/routines/${routineId}`,
@@ -22,15 +22,15 @@ const Routines = ({ Routines, token, fetchRoutines }) => {
             Routines.map(routines => <SingleRoutine key={routines._id} routines={routines} token={token}>
 
                 {
-                    routines && <Link to={`/routines/${routines._id}`} className="view-link">View Routines</Link>
+                    routine && <Link to={`/routines/${routines._id}`} className="view-link">View Routines</Link>
                 }
 
                 {
-                    routines.isUser && <Link to={`/routines/edit/${routines._id}`} className="edit-link">Edit Routines</Link>
+                    routine.isUser && <Link to={`/routines/edit/${routines._id}`} className="edit-link">Edit Routines</Link>
                 }
 
                 {
-                    routines.isUser && <Link to={`/routines/delete/${routines._id}`} onClick={() => handleDelete(routines._id)} className="delete-link">Delete</Link>
+                    routine.isUser && <Link to={`/routines/delete/${routines._id}`} onClick={() => handleDelete(routines._id)} className="delete-link">Delete</Link>
                 }
             </SingleRoutine>)
         }

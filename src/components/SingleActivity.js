@@ -2,14 +2,12 @@ import React from 'react';
 
 const SingleActivity = ({ activity, children }) => {
     return activity
-        ? <div
-            style={{ margin: '1.2rem' }}
-        >
+        ? <div style={{ margin: '1.2rem' }}>
             <h5>
                 {activity.title}
             </h5>
             <div>Name: {activity.name}</div>
-            <div>Description: {post.description}</div>
+            <div>Description: {activity.description}</div>
             
             {
                 children
