@@ -8,6 +8,7 @@ import {
     LoginRegister,
     MyRoutines,
     Routines,
+    Register,
     Login,
     Users
 } from './'
@@ -116,6 +117,7 @@ const App = () => {
             <div className='link-bar'>
                 <Link to='/' className='nav-link'>Home</Link>
                 <Link to='/routines' className='nav-link'>Routines</Link>
+                <Link to='/register' className='nav-link'>Register</Link>
                 {
                  token ? <Link to='/user/routines' className='nav-link'>My Routines</Link> : null  
                 }
@@ -148,13 +150,16 @@ const App = () => {
             <Route exact path='/activities'>
                 <Activities {...props} />
             </Route>
+              <Route exact path='/login'>
+                <Login {...props} />
+            </Route>
 
             <Route exact path='/user/routines/myroutines'>
                 <MyRoutines {...props} />
             </Route>
 
-            <Route exact path='/user/:method'>
-                <Login {...props} />
+            <Route exact path='/register'>
+                <Register {...props} />
             </Route>
         </main>
     </>;

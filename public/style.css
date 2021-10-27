@@ -19,7 +19,7 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 4.5em;
+    margin-top: 6.5em;
     background-color: #466485;
     min-height: 100vh;
 }
@@ -50,7 +50,7 @@ main {
 .link-bar {
     margin-right: 4vw;
     margin-top: 56px;
-    margin-bottom: -22px;
+    margin-bottom: -2px;
     padding-bottom: 12px;
 }
 

@@ -5,9 +5,9 @@ import {useHistory} from 'react-router';
 const {REACT_APP_BASE_URL} = process.env;
 
 const Register = ({setLoggedIn, setToken}) => {
-    const [ username, setUsername ] = useState('');
-    const [ password, setPassword ] = useState('');
-    const [ verPass, setVerPass ] = useState('');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [verPass, setVerPass] = useState('');
     const history = useHistory();
     
     const handleSubmit = async (ev) => {
@@ -34,7 +34,7 @@ const Register = ({setLoggedIn, setToken}) => {
         };
     };
 
-    return <>
+    return <div>
         <h2>Register</h2>
         <form onSubmit={handleSubmit} className='login'>
             <input type='text' placeholder='enter username' onChange={(ev) => setUsername(ev.target.value)} value={username}></input>
@@ -50,7 +50,7 @@ const Register = ({setLoggedIn, setToken}) => {
         { password !== verPass && <span className='non-matching-data'>Passwords must match!</span> }
 
         { password.length < 8 && <span className='non-matching-data'>Passwords must contain at least 8 characters!</span> }
-    </>;
+    </div>;
 };
 
 export default Register;
