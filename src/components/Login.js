@@ -56,7 +56,7 @@ const Login= ({ setToken, setUser, setMessages, setUserId }) => {
             <button type="submit" disabled={ !password || !username || password.length < 8 || password !== verPass }>Login</button>
         </form>
 
-        { password !== verPass && <span className='non-matching-data'>Passwords must match!</span> }
+        {/* { password !== verPass && <span className='non-matching-data'>Passwords must match!</span> } */}
 
         { password.length < 8 && <span className='non-matching-data'>Passwords must contain at least 8 characters!</span> }
     </div>; 

@@ -2,9 +2,7 @@ import React from 'react';
 import { callApi } from '../util';
 import { Link } from 'react-router-dom';
 
-import {
-    SingleRoutine,
-} from './SingleRoutine';
+import { SingleRoutine } from './';
 
 const Routines = ({ routines, token, fetchRoutines }) => {
     return <div>
@@ -28,7 +26,7 @@ const Routines = ({ routines, token, fetchRoutines }) => {
 
 //     return 
 //         { 
-//             Routines.map(routines => <SingleRoutine key={routines._id} routines={routines} token={token}>
+//             routines.map(routines => <SingleRoutine key={routines._id} routines={routines} token={token}>
 
 //                 {
 //                     routine && <Link to={`/routines/${routines._id}`} className="view-link">View Routines</Link>
