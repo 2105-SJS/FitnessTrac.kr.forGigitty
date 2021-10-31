@@ -8,7 +8,10 @@ import {
     Login,
     MyRoutines,
     Routines,
-    Users
+    Users,
+    Register,
+    SingleActivity,
+    SingleRoutine
 } from './'
 
 import { callApi } from '../util';
