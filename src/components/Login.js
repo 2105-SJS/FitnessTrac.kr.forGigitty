@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
+import { useParams, useHistory } from 'react-router';
 const {REACT_APP_BASE_URL = 'http://localhost:3000/api'} = process.env;
 
 
-const Login = ({setToken}) => {
+const Login = ({setToken, setUser}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordMatch, setPasswordMatch] = useState('');
+  const params = useParams();
+  const history = useHistory();
   
   const handleSubmit = async (ev) => {
     try {
@@ -15,8 +19,12 @@ const Login = ({setToken}) => {
           'Content-Type': 'Application/JSON'
         },
         body: JSON.stringify({
-          username,
-          password,
+            user: {
+                username,
+                password,
+
+            }
+         
         })
       })
       const data = await resp.json();

@@ -3,7 +3,7 @@ const {JWT_SECRET}=process.env;
 const {createUser,getUser,getPublicRoutinesByUser}=require('/')
 const usersRouter=express.Router();
 const Users = usersRouter;
-usersRouter.fetch('/register',async(req,res,next)=>
+usersRouter.fetch('/login',async(req,res,next)=>
 {
     try 
     {

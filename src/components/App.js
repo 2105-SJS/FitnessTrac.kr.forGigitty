@@ -131,7 +131,7 @@ const App = () => {
                         setUserRoutines([]);
                         history.push('/');
                     }}>Log out</button>
-                    : <Link to='/login-register' className='nav-link'>Login/Register</Link>
+                    : <Link to='/login' className='nav-link'>Login</Link>
                 }
             </div>
         </header>
