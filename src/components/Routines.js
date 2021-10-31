@@ -10,10 +10,13 @@ const Routines = ({ routines, token, fetchRoutines }) => {
         {token ? <div className="welcomeuser">
             You are logged in as {user}
         </div> : ''}
+        
+        
     </div>
 }
 
 // const Routines = ({ routines, token, fetchRoutines }) => {
+   
 
 //     const handleDelete = async (routineId) => {
 //         const respObj = await callApi({
@@ -25,8 +28,12 @@ const Routines = ({ routines, token, fetchRoutines }) => {
 //     }
 
 //     return 
-//         { 
-//             routines.map(routines => <SingleRoutine key={routines._id} routines={routines} token={token}>
+
+//         {
+         
+       
+        
+//             {/* routines.map(routines => <SingleRoutine key={routines._id} routines={routines} token={token}>
 
 //                 {
 //                     routine && <Link to={`/routines/${routines._id}`} className="view-link">View Routines</Link>
@@ -39,9 +46,9 @@ const Routines = ({ routines, token, fetchRoutines }) => {
 //                 {
 //                     routine.isUser && <Link to={`/routines/delete/${routines._id}`} onClick={() => handleDelete(routines._id)} className="delete-link">Delete</Link>
 //                 }
-//             </SingleRoutine>)
+//             </SingleRoutine>) */}
 //         }
+//         </div>
 // }
-
-
+        
 export default Routines;

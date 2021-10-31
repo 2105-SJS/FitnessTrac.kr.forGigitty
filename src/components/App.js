@@ -5,11 +5,9 @@ import { useHistory } from 'react-router';
 import {
     Activities,
     Home,
-    LoginRegister,
+    Login,
     MyRoutines,
     Routines,
-    Register,
-    Login,
     Users
 } from './'
 
@@ -72,6 +70,7 @@ const App = () => {
         setPublicRoutines,
         token,
         setToken,
+        Login,
         userId,
         setUserId,
         userName,
@@ -116,12 +115,11 @@ const App = () => {
             <div className='logo'>Fitness Trac.kr</div>
             <div className='link-bar'>
                 <Link to='/' className='nav-link'>Home</Link>
-                <Link to='/routines' className='nav-link'>Routines</Link>
-                <Link to='/register' className='nav-link'>Register</Link>
+                <Link to='./routines' className='nav-link'>Routines</Link>
                 {
                  token ? <Link to='/user/routines' className='nav-link'>My Routines</Link> : null  
                 }
-                <Link to='/activities' className='nav-link'>Activities</Link>
+                <Link to='./activities' className='nav-link'>Activities</Link>
                 {
                  token 
                     ? <button className='logout' onClick={() => {
@@ -133,7 +131,7 @@ const App = () => {
                         setUserRoutines([]);
                         history.push('/');
                     }}>Log out</button>
-                    : <Link to='/login' className='nav-link'>Login</Link>
+                    : <Link to='/login-register' className='nav-link'>Login/Register</Link>
                 }
             </div>
         </header>
@@ -156,10 +154,6 @@ const App = () => {
 
             <Route exact path='/user/routines/myroutines'>
                 <MyRoutines {...props} />
-            </Route>
-
-            <Route exact path='/register'>
-                <Register {...props} />
             </Route>
         </main>
     </>;

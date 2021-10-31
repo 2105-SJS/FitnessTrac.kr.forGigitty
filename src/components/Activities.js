@@ -13,6 +13,7 @@ const Activities = ({ user, token, messages, userId }) => {
 }
 
 // const Activities = ({ activities, fetchActivities }) => {
+    
 //     const token = localStorage.getItem('token');
 //     const [name, setName] = useState('');
 //     const [description, setDescription] = useState('');
