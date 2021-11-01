@@ -7,6 +7,14 @@ import { SingleRoutine } from './';
 const Routines = ({ routines, token, fetchRoutines }) => {
     return <div>
         <h1 className="welcome">Routines Page</h1>
+          <a
+          className="App-link"
+          href="https://fitnesstrac-kr.herokuapp.com/api/routines"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+        Routines
+        </a>
         {token ? <div className="welcomeuser">
             You are logged in as {user}
         </div> : ''}
