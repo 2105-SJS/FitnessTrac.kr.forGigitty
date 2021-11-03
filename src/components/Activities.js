@@ -3,74 +3,65 @@ import { callApi } from '../util';
 import {  useHistory } from 'react-router';
 import { SingleActivity } from './'
 
-const Activities = ({ user, token, messages, userId }) => {
-    return <div>
-        <h1 className="welcome">Activities Page</h1>
-        {token ? <div className="welcomeuser">
-            You are logged in as {user}
-        </div> : ''}
-    </div>
-}
 
-// const Activities = ({ activities, fetchActivities }) => {
+const Activities = ({ activities, fetchActivities }) => {
+    const token = localStorage.getItem('token');
+    const [name, setName] = useState('');
+    const [description, setDescription] = useState('');
+
+    const history = useHistory();
     
-//     const token = localStorage.getItem('token');
-//     const [name, setName] = useState('');
-//     const [description, setDescription] = useState('');
+    const handleAddActivity= async (event) => {
+        event.preventDefault();
+        try {
+            const response = await callApi({
+                url: 'activities',
+                method: 'POST',
+                body: { name, description },
+                token
+            })
+            if (response) {
+                await fetchActivities();
+                setName('');
+                setDescription('');
+                history.push('/activities')
+            }
+            return response;            
+        } catch (error) {
+            console.error (error);
+        };
+    };
 
-//     const history = useHistory();
-    
-//     const handleSubmit = async (e) => {
-//         e.preventDefault();
-//         try {
-//             const response = await callApi({
-//                 url: '/activities',
-//                 method: 'POST',
-//                 body: { name, description },
-//                 token
-//             })
-//             if (response) {
-//                 await fetchActivities();
-//                 setName('');
-//                 setDescription('');
-//                 history.push('/activities')
-//             }
-//             return response;            
-//         } catch (error) {
-//             console.error (error);
-//         };
-//     };
-
-//     return <>
-//         {
-//         token
-//             ? <div className='form-container'>
-//                 <form onSubmit={handleSubmit}>
-//                     <fieldset>
-//                         <label>Name: </label>
-//                         <input type='text' placeholder='enter activity name' value={name} onChange={(e) => {setName(e.target.value)}}></input>
-//                     </fieldset>
-//                     <fieldset>
-//                         <label>Description: </label>
-//                         <input type='text' value={description} placeholder='enter activity description' onChange={(e) => {setDescription(e.target.value)}}></input>
-//                     </fieldset>
-//                     <button type='submit'>Add Activity</button>
-//                 </form>
-//             </div>
-//             : null
-//         }    
-//         {
-//         activities 
-//             ? <div className='activities'>
-//                     <div>Activities:</div>
-//                     {
-//                     activities.map(activity => <SingleActivity key={activity.id} activity={activity} />)
-//                     }
-//                 </div>
+    return <>
+        {
+        token
+            ? <div className='form-container'>
+                <form onSubmit={handleAddActivity}>
+                    <fieldset>
+                        <label>Name: </label>
+                        <input type='text' placeholder='name' value={name} onChange={(event) => {setName(event.target.value)}}></input>
+                    </fieldset>
+                    <fieldset>
+                        <label>Description: </label>
+                        <input type='text' value={description} placeholder='description' onChange={(event) => {setDescription(event.target.value)}}></input>
+                    </fieldset>
+                    <button type='submit'>Add activity</button>
+                </form>
+            </div>
+            : ''
+        }    
+        {
+        activities 
+            ? <div className='activities'>
+                    <span>Activities:</span>
+                    {
+                    activities.map(activity => <SingleActivity key={activity.id} activity={activity} />)
+                    }
+                </div>
             
-//             : 'Loading...'
-//         }
-//     </>
-// };
+            : 'It is cooking...'
+        }
+    </>
+};
 
 export default Activities;

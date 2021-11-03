@@ -19,7 +19,7 @@ const MyRoutines = ({activities, fetchPublicRoutines, fetchUserRoutines, userRou
         ev.preventDefault();
         try {
             const response = await callApi({
-                url: `/routines`,
+                url: `routines`,
                 method: "POST",
                 body: {name, goal, isPublic},
                 token
@@ -28,7 +28,7 @@ const MyRoutines = ({activities, fetchPublicRoutines, fetchUserRoutines, userRou
                 setError(response.error);
             };
             if (response) {
-                await callApi({url: '/routines', token});
+                await callApi({url: 'routines', token});
                 setName('');
                 setGoal('');
                 setIsPublic(false);
@@ -45,11 +45,11 @@ const MyRoutines = ({activities, fetchPublicRoutines, fetchUserRoutines, userRou
     const handleDeleteRoutine = async (routineId) => {
         try {
             await callApi({
-                url: `/routines/${routineId}`, 
+                url: `routines/${routineId}`, 
                 method: "DELETE",
                 token            
             })
-            await callApi({url: '/routines', token});
+            await callApi({url: 'routines', token});
             fetchUserRoutines();
             fetchPublicRoutines();
             history.push('/user/routines');
@@ -58,37 +58,11 @@ const MyRoutines = ({activities, fetchPublicRoutines, fetchUserRoutines, userRou
         };    
     };
 
-    const handleEditRoutine = (routineId) => async (ev) => {
-        ev.preventDefault();
-        try {
-            const response = await callApi({
-                url: `routines/${routineId}`,
-                method: 'PATCH',
-                body: {name, goal},
-                token
-            });
-            if (response.error) {
-                setError(response.error);
-            };
-            if (response) {
-                setName('');
-                setGoal('');
-                setIsPublic(false);
-                await fetchPublicRoutines();
-                await fetchUserRoutines();
-                history.push('/user/routines');
-            };
-            return response;
-        } catch (error) {
-            console.error (error);
-        };
-    };
-
     const handleAddActivity = (routineId) => async (ev) => {
         ev.preventDefault();
         try {
             const response = await callApi({
-                url: `/routines/${routineId}/activities`,
+                url: `routines/${routineId}/activities`,
                 method: 'POST',
                 body: {activityId, count, duration},
                 token
@@ -137,21 +111,6 @@ const MyRoutines = ({activities, fetchPublicRoutines, fetchUserRoutines, userRou
                     userRoutines.map(routine => <SingleRoutine key={routine.id} routine={routine}>
 
                         { <button onClick={() => handleDeleteRoutine(routine.id)}>Delete Routine</button> }
-                        
-                        { <div>
-                            <h3>Edit Routine</h3>
-                            <form onSubmit={handleEditRoutine(routine.id)}>
-                                <fieldset>
-                                    <label>Change Name: </label>
-                                    <input type='text' value={name} placeholder={routine.name} onChange={(ev) => setName(ev.target.value)} />
-                                </fieldset>
-                                <fieldset>
-                                    <label>Change Goal: </label>
-                                    <input type='text' value={goal} placeholder={routine.goal} onChange={(ev) => setGoal(ev.target.value)} />
-                                </fieldset>
-                            </form>
-                            <button type='submit'>Submit Changes</button>
-                        </div> }
 
                         { <div>
                             <h3>Add Activity To Routine</h3>

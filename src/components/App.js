@@ -17,20 +17,20 @@ import {
 import { callApi } from '../util';
 
 const App = () => {
-    const [publicRoutines, setPublicRoutines] = useState([]);
+    const [routines, setRoutines] = useState([]);
     const [activities, setActivities] = useState([]);
     const [token, setToken] = useState('');
     const [userName, setUserName] = useState('');
     const [userRoutines, setUserRoutines] = useState([]);
     const [userId, setUserId] = useState(Number)
-
+    const [currentUser, setCurrentUser] = useState({});
     const history = useHistory();
     
     const fetchPublicRoutines = async () => {
         try {
-            const fetchRoutines = await callApi ({ url: `/routines` });
+            const fetchRoutines = await callApi ({ url: `routines` });
             if (fetchRoutines) {
-                setPublicRoutines(fetchRoutines);
+                setRoutines(fetchRoutines);
             };
             return;            
         } catch (error) {
@@ -43,7 +43,7 @@ const App = () => {
         const localUsername = localStorage.getItem('username');
         try {
             if (localUsername) {
-                const fetchRoutines = await callApi ({ url: `/users/${localUsername}/routines`, token: `${localToken}` });
+                const fetchRoutines = await callApi ({ url: `users/${localUsername}/routines`, token: `${localToken}` });
                 if (fetchRoutines) {
                     setUserRoutines(fetchRoutines);
                 };
@@ -56,7 +56,7 @@ const App = () => {
 
     const fetchActivities = async () => {
         try {
-            const fetchActivities = await callApi ({ url: `/activities` });
+            const fetchActivities = await callApi ({ url: `activities` });
             if (fetchActivities) {
                 setActivities(fetchActivities);
             };
@@ -69,8 +69,8 @@ const App = () => {
     const props = {
         activities,
         setActivities,
-        publicRoutines,
-        setPublicRoutines,
+        routines,
+        setRoutines,
         token,
         setToken,
         Login,
@@ -82,14 +82,14 @@ const App = () => {
         setUserRoutines,
         fetchActivities,
         fetchPublicRoutines,
-        fetchUserRoutines
+        fetchUserRoutines,
+        setCurrentUser
     };
 
     useEffect(() => {
         try {
             fetchActivities();
             fetchPublicRoutines();
-            fetchUserRoutines();
             if (token) {
                 fetchUserRoutines();
             };
@@ -118,11 +118,11 @@ const App = () => {
             <div className='logo'>Fitness Trac.kr</div>
             <div className='link-bar'>
                 <Link to='/' className='nav-link'>Home</Link>
-                <Link to='./routines' className='nav-link'>Routines</Link>
+                <Link to='/routines' className='nav-link'>Routines</Link>
                 {
                  token ? <Link to='/user/routines' className='nav-link'>My Routines</Link> : null  
                 }
-                <Link to='./activities' className='nav-link'>Activities</Link>
+                <Link to='/activities' className='nav-link'>Activities</Link>
                 {
                  token 
                     ? <button className='logout' onClick={() => {
@@ -155,7 +155,7 @@ const App = () => {
                 <Login {...props} />
             </Route>
 
-            <Route exact path='/user/routines/myroutines'>
+            <Route exact path='/user/routines'>
                 <MyRoutines {...props} />
             </Route>
         </main>

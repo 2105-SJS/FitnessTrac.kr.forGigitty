@@ -11,7 +11,7 @@ const SingleRoutine = ({ children, routine }) => {
             <span>Goal: {routine.goal}</span>
             <span>Public: {routine.isPublic ? 'yes': 'no' }</span>
 
-            { children}
+            { children }
 
             {
             routine.activities.length > 0 && <div className='activities'>
