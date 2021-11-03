@@ -59,7 +59,7 @@ const Activities = ({ activities, fetchActivities }) => {
                     }
                 </div>
             
-            : 'It is cooking...'
+            : 'Activities should appear...'
         }
     </>
 };
